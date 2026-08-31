@@ -1,0 +1,493 @@
+<title>Chetana Dharavathu</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --paper:#EDF1F3;
+    --surface:#FFFFFF;
+    --surface-2:#E2E9EC;
+    --ink:#131A20;
+    --ink-soft:#4E5A62;
+    --ink-faint:#7C8990;
+    --line:#C7D1D6;
+    --accent:#BC6A2C;
+    --accent-soft:#F1E0CD;
+    --wire:#3D6E96;
+    --wire-soft:#DCE7EF;
+    --shadow: 0 1px 2px rgba(19,26,32,0.05), 0 10px 28px rgba(19,26,32,0.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0E1418;
+      --surface:#161F24;
+      --surface-2:#1D272D;
+      --ink:#E7ECEE;
+      --ink-soft:#A9B6BC;
+      --ink-faint:#748086;
+      --line:#2B383F;
+      --accent:#E08A45;
+      --accent-soft:#3A2C1C;
+      --wire:#6FA8CE;
+      --wire-soft:#1C2E38;
+      --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 30px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0E1418;
+    --surface:#161F24;
+    --surface-2:#1D272D;
+    --ink:#E7ECEE;
+    --ink-soft:#A9B6BC;
+    --ink-faint:#748086;
+    --line:#2B383F;
+    --accent:#E08A45;
+    --accent-soft:#3A2C1C;
+    --wire:#6FA8CE;
+    --wire-soft:#1C2E38;
+    --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 12px 30px rgba(0,0,0,0.35);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;} }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height:1.65;
+    font-size:16px;
+  }
+  h1,h2,h3,h4{
+    font-family:"JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+    font-weight:700;
+    color:var(--ink);
+    text-wrap:balance;
+    line-height:1.2;
+    margin:0;
+  }
+  a{color:var(--wire); text-decoration-color: color-mix(in srgb, var(--wire) 40%, transparent);}
+  code, .mono{font-family:"JetBrains Mono", ui-monospace, monospace;}
+  .tnum{font-variant-numeric:tabular-nums;}
+
+  a:focus-visible, button:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+
+  .wrap{max-width:960px; margin:0 auto; padding:0 28px;}
+  @media (max-width:640px){ .wrap{padding:0 18px;} }
+
+  /* ---- top nav ---- */
+  .topnav{
+    position:sticky; top:0; z-index:50;
+    background:color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .topnav .wrap{display:flex; align-items:center; justify-content:space-between; padding-top:14px; padding-bottom:14px;}
+  .topnav .brand{font-family:"JetBrains Mono",monospace; font-weight:700; font-size:0.95rem; color:var(--ink); text-decoration:none;}
+  .topnav .brand .dot{color:var(--accent);}
+  .topnav nav{display:flex; gap:22px;}
+  .topnav nav a{
+    font-family:"JetBrains Mono",monospace;
+    font-size:0.78rem;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--ink-soft);
+    text-decoration:none;
+  }
+  .topnav nav a:hover{color:var(--accent);}
+  @media (max-width:640px){ .topnav nav{gap:14px;} .topnav nav a{font-size:0.68rem;} }
+
+  /* ---- schematic panel: corner-bracket motif ---- */
+  .panel{position:relative; padding:20px 24px; margin:0;}
+  .panel::before, .panel::after{
+    content:""; position:absolute; width:14px; height:14px;
+    border-color:var(--line); border-style:solid; border-width:0;
+  }
+  .panel::before{ top:0; left:0; border-top-width:2px; border-left-width:2px; }
+  .panel::after{ bottom:0; right:0; border-bottom-width:2px; border-right-width:2px; }
+
+  .eyebrow{
+    font-family:"JetBrains Mono",monospace;
+    font-size:0.74rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--accent);
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::after{content:""; flex:1; height:1px; background:var(--line);}
+
+  section{padding:64px 0;}
+  section + section{border-top:1px solid var(--line);}
+
+  /* ---- hero ---- */
+  .hero{padding-top:56px; padding-bottom:56px; border-top:none;}
+  .hero-grid{display:grid; grid-template-columns:1.1fr 1fr; gap:40px; align-items:center;}
+  @media (max-width:800px){ .hero-grid{grid-template-columns:1fr;} }
+  .hero h1{font-size:clamp(2rem, 5vw, 2.9rem); letter-spacing:-0.01em;}
+  .hero .role{
+    margin-top:10px; font-family:"JetBrains Mono",monospace; font-size:1.05rem; color:var(--wire);
+  }
+  .hero p.lede{margin-top:18px; color:var(--ink-soft); max-width:52ch; font-size:1.02rem;}
+  .hero .links{display:flex; flex-wrap:wrap; gap:12px; margin-top:26px;}
+  .btn{
+    font-family:"JetBrains Mono",monospace; font-size:0.82rem; text-decoration:none;
+    padding:9px 16px; border-radius:4px; border:1px solid var(--line); color:var(--ink);
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn.primary{background:var(--accent); border-color:var(--accent); color:#fff;}
+  .btn:hover{border-color:var(--accent); color:var(--accent);}
+  .btn.primary:hover{color:#fff; opacity:0.92;}
+
+  .diagram-frame{
+    background:var(--surface); border:1px solid var(--line); border-radius:6px; box-shadow:var(--shadow);
+    padding:14px;
+  }
+  .diagram-frame svg{width:100%; height:auto; display:block;}
+
+  /* ---- about ---- */
+  .about p{max-width:68ch; color:var(--ink-soft); font-size:1.02rem;}
+
+  /* ---- skills ---- */
+  .skill-group{margin-bottom:18px;}
+  .skill-group h3{font-size:0.78rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-faint); font-weight:600; margin-bottom:10px;}
+  .chips{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{
+    font-family:"JetBrains Mono",monospace; font-size:0.8rem;
+    padding:5px 11px; border-radius:4px; background:var(--surface-2); color:var(--ink-soft);
+    border:1px solid var(--line);
+  }
+
+  /* ---- experience timeline ---- */
+  .tl{border-left:2px solid var(--line); margin-left:6px; padding-left:26px;}
+  .tl-item{position:relative; padding-bottom:40px;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-item::before{
+    content:""; position:absolute; left:-33px; top:4px; width:11px; height:11px; border-radius:50%;
+    background:var(--paper); border:2px solid var(--accent);
+  }
+  .tl-item .role-line{display:flex; flex-wrap:wrap; align-items:baseline; gap:10px; margin-bottom:4px;}
+  .tl-item h3{font-size:1.08rem;}
+  .tl-item .company{color:var(--wire); font-family:"JetBrains Mono",monospace; font-size:0.92rem;}
+  .tl-item .dates{font-family:"JetBrains Mono",monospace; font-size:0.78rem; color:var(--ink-faint); margin-left:auto;}
+  .tl-item ul{margin:10px 0 0; padding-left:1.15em; color:var(--ink-soft);}
+  .tl-item li{margin-bottom:8px; max-width:68ch;}
+  .tl-item .stack-line{font-family:"JetBrains Mono",monospace; font-size:0.8rem; color:var(--ink-faint); margin-top:2px;}
+
+  /* ---- projects ---- */
+  .proj-grid{display:flex; flex-direction:column; gap:22px;}
+  .proj{
+    background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:22px 24px; box-shadow:var(--shadow);
+  }
+  .proj-top{display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:10px; margin-bottom:6px;}
+  .proj h3{font-size:1.15rem;}
+  .proj h3 .sep{color:var(--ink-faint); font-weight:400; margin:0 6px;}
+  .proj a.gh{font-family:"JetBrains Mono",monospace; font-size:0.78rem; text-decoration:none; white-space:nowrap;}
+  .proj .stack{font-family:"JetBrains Mono",monospace; font-size:0.8rem; color:var(--ink-faint); margin-bottom:12px;}
+  .proj ul{margin:0; padding-left:1.15em; color:var(--ink-soft);}
+  .proj li{margin-bottom:8px; max-width:70ch;}
+  .stat-row{display:flex; flex-wrap:wrap; gap:10px; margin-top:14px;}
+  .stat{
+    font-family:"JetBrains Mono",monospace; font-size:0.78rem; color:var(--ink);
+    background:var(--wire-soft); border:1px solid var(--line); border-radius:4px; padding:5px 10px;
+  }
+  .stat b{color:var(--wire);}
+
+  /* ---- education ---- */
+  .edu-row{display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px;}
+  .edu-row .dates{font-family:"JetBrains Mono",monospace; color:var(--ink-faint); font-size:0.85rem;}
+
+  /* ---- accomplishments ---- */
+  .acc-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px 24px; margin-top:10px;}
+  @media (max-width:640px){ .acc-grid{grid-template-columns:1fr;} }
+  .acc-item{font-size:0.94rem; color:var(--ink-soft); display:flex; gap:10px;}
+  .acc-item .mk{font-family:"JetBrains Mono",monospace; color:var(--accent); flex-shrink:0;}
+
+  /* ---- footer ---- */
+  footer{padding:48px 0 60px; text-align:center;}
+  footer .links{display:flex; justify-content:center; gap:22px; margin-bottom:16px; flex-wrap:wrap;}
+  footer .links a{font-family:"JetBrains Mono",monospace; font-size:0.85rem; text-decoration:none; color:var(--ink-soft);}
+  footer .links a:hover{color:var(--accent);}
+  footer .fine{font-family:"JetBrains Mono",monospace; font-size:0.72rem; color:var(--ink-faint);}
+</style>
+
+<div class="topnav">
+  <div class="wrap">
+    <a class="brand" href="#top">chetana<span class="dot">.</span>dev</a>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</div>
+
+<div id="top"></div>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>Chetana Dharavathu</h1>
+      <div class="role">backend &amp; distributed systems engineer</div>
+      <p class="lede">I design systems the way I'd want to debug them at 3am: event-driven, saga-orchestrated, and instrumented enough to prove they work &mdash; not just assume it.</p>
+      <div class="links">
+        <a class="btn primary" href="https://github.com/chetana2002" target="_blank" rel="noopener">GitHub &rarr;</a>
+        <a class="btn" href="https://www.linkedin.com/in/chetana-dharavathu/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" href="mailto:chetanadharavathu@gmail.com">Email</a>
+      </div>
+    </div>
+    <div class="diagram-frame">
+      <svg viewBox="0 0 380 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram of an order saga flowing from client through gateway, order service, and Kafka to payment and driver services, backed by Postgres and Redis">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--wire)"></path>
+          </marker>
+        </defs>
+        <g fill="none" stroke="var(--line)" stroke-width="1.4">
+          <path d="M55,40 H150" marker-end="url(#arrow)"></path>
+          <path d="M215,40 H285" marker-end="url(#arrow)"></path>
+          <path d="M190,58 V95" marker-end="url(#arrow)"></path>
+          <path d="M155,113 H100 V150" marker-end="url(#arrow)"></path>
+          <path d="M225,113 H280 V150" marker-end="url(#arrow)"></path>
+          <path d="M100,187 V210" marker-end="url(#arrow)"></path>
+          <path d="M280,187 V210" marker-end="url(#arrow)"></path>
+        </g>
+        <circle r="3.4" fill="var(--accent)">
+          <animateMotion dur="3.2s" repeatCount="indefinite" path="M55,40 H150 M175,40 Q190,40 190,58 V95 M190,105 Q190,113 175,113 H100 V150 M100,165 V210"></animateMotion>
+        </circle>
+
+        <g font-family="JetBrains Mono, monospace" font-size="10.5" fill="var(--ink)">
+          <rect x="8" y="26" width="47" height="28" rx="3" fill="var(--surface)" stroke="var(--wire)" stroke-width="1.4"></rect>
+          <text x="31" y="43" text-anchor="middle">client</text>
+
+          <rect x="150" y="26" width="65" height="28" rx="3" fill="var(--surface)" stroke="var(--wire)" stroke-width="1.4"></rect>
+          <text x="182" y="43" text-anchor="middle">gateway</text>
+
+          <rect x="285" y="26" width="70" height="28" rx="3" fill="var(--surface)" stroke="var(--line)" stroke-width="1.2"></rect>
+          <text x="320" y="43" text-anchor="middle" fill="var(--ink-faint)">postgres</text>
+
+          <rect x="155" y="95" width="70" height="30" rx="3" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.6"></rect>
+          <text x="190" y="114" text-anchor="middle">order-svc</text>
+
+          <rect x="60" y="150" width="80" height="30" rx="3" fill="var(--surface)" stroke="var(--wire)" stroke-width="1.4"></rect>
+          <text x="100" y="169" text-anchor="middle">payment</text>
+
+          <rect x="240" y="150" width="80" height="30" rx="3" fill="var(--surface)" stroke="var(--wire)" stroke-width="1.4"></rect>
+          <text x="280" y="169" text-anchor="middle">driver-svc</text>
+
+          <rect x="65" y="210" width="70" height="26" rx="3" fill="var(--surface)" stroke="var(--line)" stroke-width="1.2"></rect>
+          <text x="100" y="227" text-anchor="middle" fill="var(--ink-faint)">kafka</text>
+
+          <rect x="245" y="210" width="70" height="26" rx="3" fill="var(--surface)" stroke="var(--line)" stroke-width="1.2"></rect>
+          <text x="280" y="227" text-anchor="middle" fill="var(--ink-faint)">redis</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="about panel">
+  <div class="wrap">
+    <div class="eyebrow">about</div>
+    <p style="margin-top:18px;">Backend and full-stack software engineer with a Computer Science degree from IIT Indore. I build production-grade distributed systems &mdash; event-driven microservices with Kafka, saga orchestration, and transactional outbox patterns &mdash; alongside secure, thoroughly tested platforms spanning authentication, authorization, sandboxed code execution, and LLM-backed applications. Strong DSA foundations, with 450+ LeetCode problems solved.</p>
+
+    <div style="margin-top:34px;">
+      <div class="skill-group">
+        <h3>Languages</h3>
+        <div class="chips">
+          <span class="chip">Python</span><span class="chip">TypeScript</span><span class="chip">JavaScript</span><span class="chip">C++</span><span class="chip">SQL</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Backend &amp; Systems</h3>
+        <div class="chips">
+          <span class="chip">Node.js</span><span class="chip">FastAPI</span><span class="chip">REST APIs</span><span class="chip">Microservices</span><span class="chip">Event-Driven Architecture</span><span class="chip">Saga Orchestration</span><span class="chip">JWT Auth</span><span class="chip">Docker</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Frontend</h3>
+        <div class="chips">
+          <span class="chip">React.js</span><span class="chip">Next.js</span><span class="chip">Tailwind CSS</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Databases</h3>
+        <div class="chips">
+          <span class="chip">PostgreSQL</span><span class="chip">ClickHouse</span><span class="chip">Query Optimization</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Data &amp; Infra</h3>
+        <div class="chips">
+          <span class="chip">Apache Kafka</span><span class="chip">Redis</span><span class="chip">Prometheus / Grafana</span><span class="chip">CI/CD &mdash; GitHub Actions</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Tools</h3>
+        <div class="chips">
+          <span class="chip">Git</span><span class="chip">Linux</span><span class="chip">System Design</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="eyebrow">experience</div>
+    <div class="tl" style="margin-top:30px;">
+      <div class="tl-item">
+        <div class="role-line">
+          <h3>Software Developer</h3>
+          <span class="company">Rao IIT &amp; Medical</span>
+          <span class="dates tnum">Mar 2025 &ndash; Present</span>
+        </div>
+        <ul>
+          <li>Architected and built a production-grade LMS as a modular monolith (FastAPI + PostgreSQL / SQLAlchemy + Next.js / TypeScript), spanning 12+ backend domains &mdash; auth, academics, courses, batches, materials, timetable, attendance &mdash; with a 47-table normalized schema and Alembic migrations.</li>
+          <li>Designed and enforced a two-layer RBAC / authorization system &mdash; role-based permissions plus object-level scope checks (a professor can only manage courses they're actually assigned to, a student only sees their enrolled batch's content) &mdash; validated by 30+ automated integration tests covering privilege-escalation and cross-tenant access attempts.</li>
+          <li>Built a secure file-upload and delivery pipeline with three-layer validation (extension, declared MIME type, magic-byte content sniffing) and HMAC-signed, time-limited download URLs, preventing file-type spoofing and unauthorized access to student materials.</li>
+          <li>Implemented a full authentication system (JWT + rotating httpOnly refresh tokens, email / phone login, Google OAuth account linking, self-service signup with admin-approval workflow) and an audit-logging layer tracking every sensitive state change, verified end-to-end through live browser testing, not just unit tests.</li>
+        </ul>
+      </div>
+      <div class="tl-item">
+        <div class="role-line">
+          <h3>Freelance Full-Stack Developer</h3>
+          <span class="company">Self-Employed</span>
+          <span class="dates tnum">Aug 2024 &ndash; Feb 2025</span>
+        </div>
+        <ul>
+          <li>Built <a href="https://github.com/chetana2002/InterviewOS" target="_blank" rel="noopener">InterviewOS</a>, a full-stack AI interview-prep platform with a multi-agent LLM pipeline &mdash; resume / JD matching, gap analysis, adaptive mock interviews &mdash; backed by a deterministic evidence-verification layer that rejects any AI claim not traceable to a verbatim source quote.</li>
+          <li>Built two isolated code-execution sandboxes from scratch &mdash; network-isolated Docker containers for arbitrary code and an engine-level read-only SQL sandbox &mdash; each verified with real security tests.</li>
+          <li>Designed an adaptive interview engine that adjusts question difficulty from scored answers in real time and generates a personalized improvement plan from detected weak areas.</li>
+          <li>Conducted a security audit and shipped with 200+ automated tests, S3-compatible storage, and CI-ready Docker deployments across a 19-table Postgres schema.</li>
+        </ul>
+        <div class="stack-line">Python &middot; FastAPI &middot; TypeScript &middot; Next.js &middot; PostgreSQL &middot; Docker &middot; Google Gemini API</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="panel">
+  <div class="wrap">
+    <div class="eyebrow">projects</div>
+    <div class="proj-grid" style="margin-top:30px;">
+
+      <div class="proj">
+        <div class="proj-top">
+          <h3>DispatchX <span class="sep">&mdash;</span> Distributed Food Delivery Platform</h3>
+          <a class="gh" href="https://github.com/chetana2002/DispatchX" target="_blank" rel="noopener">github &rarr;</a>
+        </div>
+        <div class="stack">FastAPI &middot; Python &middot; Next.js &middot; PostgreSQL &middot; Apache Kafka &middot; Redis &middot; Docker &middot; Prometheus / Grafana</div>
+        <ul>
+          <li>8-microservice platform implementing saga orchestration, transactional outbox, and idempotent event processing &mdash; patterns used at companies like Uber and DoorDash for order coordination at scale.</li>
+          <li>Crash-safe order processing verified through automated failure-injection testing, covering 15 distinct failure scenarios, with zero duplicate transactions.</li>
+          <li>Full CI/CD pipeline, every service containerized, instrumented with Prometheus / Grafana monitoring.</li>
+        </ul>
+        <div class="stat-row">
+          <span class="stat tnum"><b>8</b> microservices</span>
+          <span class="stat tnum"><b>15</b> failure scenarios tested</span>
+          <span class="stat tnum"><b>0</b> duplicate transactions</span>
+        </div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-top">
+          <h3>ShortStack <span class="sep">&mdash;</span> Distributed URL Shortener &amp; Analytics</h3>
+          <a class="gh" href="https://github.com/chetana2002/ShortStack" target="_blank" rel="noopener">github &rarr;</a>
+        </div>
+        <div class="stack">FastAPI &middot; Python &middot; Next.js &middot; PostgreSQL &middot; Apache Kafka &middot; ClickHouse &middot; Redis</div>
+        <ul>
+          <li>High-performance distributed platform (API, worker, dashboard) processing real-time analytics through Kafka and ClickHouse, with a caching layer keeping the core redirect path fast under load.</li>
+          <li>Found and fixed a critical production bug that broke the entire frontend, then independently verified the fix across three separate checks.</li>
+          <li>Delivered with automated tests across API, worker, and frontend, plus end-to-end browser and load testing.</li>
+        </ul>
+        <div class="stat-row">
+          <span class="stat tnum"><b>158</b> automated tests</span>
+          <span class="stat">API + worker + dashboard</span>
+        </div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-top">
+          <h3>CodeForge <span class="sep">&mdash;</span> Cloud IDE &amp; Code Execution Platform</h3>
+          <a class="gh" href="https://github.com/chetana2002/codeforge" target="_blank" rel="noopener">github &rarr;</a>
+        </div>
+        <div class="stack">FastAPI &middot; Python &middot; Next.js &middot; PostgreSQL &middot; Redis Streams &middot; Docker &middot; Prometheus / Grafana</div>
+        <ul>
+          <li>Cloud IDE executing untrusted user code across 5 languages inside isolated, network-disabled Docker sandboxes with enforced CPU / memory / process limits &mdash; the same sandbox-per-execution model used by real online judges and CI runners, not a subprocess call.</li>
+          <li>Asynchronous execution pipeline on Redis Streams consumer groups with at-least-once delivery (XACK / XAUTOCLAIM reclaim on crash) and Server-Sent Events for live status &mdash; verified empirically to scale concurrency linearly with worker replica count.</li>
+          <li>Found and fixed real distributed-systems defects via direct evidence against the running system: a stale Redis pub / sub connection silently swallowing messages, and an ORM identity-map bug masking a changed row &mdash; both now covered by regression tests.</li>
+        </ul>
+        <div class="stat-row">
+          <span class="stat tnum"><b>5</b> languages sandboxed</span>
+          <span class="stat tnum">p95 <b>1.8s</b> under load</span>
+          <span class="stat tnum"><b>120+</b> automated tests</span>
+        </div>
+      </div>
+
+      <div class="proj">
+        <div class="proj-top">
+          <h3>InterviewOS <span class="sep">&mdash;</span> AI Interview Preparation Platform</h3>
+          <a class="gh" href="https://github.com/chetana2002/InterviewOS" target="_blank" rel="noopener">github &rarr;</a>
+        </div>
+        <div class="stack">Python &middot; FastAPI &middot; TypeScript &middot; Next.js &middot; PostgreSQL &middot; Docker &middot; Google Gemini API</div>
+        <ul>
+          <li>Multi-agent LLM pipeline &mdash; resume / JD matching, gap analysis, adaptive mock interviews &mdash; backed by a deterministic evidence-verification layer that rejects any AI claim not traceable to a verbatim source quote.</li>
+          <li>Two isolated code-execution sandboxes built from scratch: network-isolated Docker for arbitrary code, an engine-level read-only SQL sandbox &mdash; each verified with real security tests.</li>
+          <li>Adaptive interview engine that adjusts question difficulty in real time from scored answers and generates a personalized improvement plan.</li>
+        </ul>
+        <div class="stat-row">
+          <span class="stat tnum"><b>200+</b> automated tests</span>
+          <span class="stat tnum"><b>19</b>-table schema</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="eyebrow">education</div>
+    <div style="margin-top:26px;">
+      <div class="edu-row">
+        <h3 style="font-size:1.05rem;">Bachelor of Technology, Computer Science Engineering</h3>
+        <span class="dates tnum">2020 &ndash; 2024</span>
+      </div>
+      <div class="edu-row" style="margin-top:4px;">
+        <span style="color:var(--ink-soft); font-style:italic;">Indian Institute of Technology, Indore</span>
+        <span class="dates tnum">CGPA 7.16/10</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="accomplishments" class="panel">
+  <div class="wrap">
+    <div class="eyebrow">accomplishments</div>
+    <div class="acc-grid">
+      <div class="acc-item"><span class="mk">&gt;</span>Ranked 197th at HackerRank Orchestrate (May 2026) &mdash; building and submitting an AI Agent.</div>
+      <div class="acc-item"><span class="mk">&gt;</span>Ranked 799th at HackerRank Orchestrate (June 2026).</div>
+      <div class="acc-item"><span class="mk">&gt;</span>450+ problems solved on LeetCode.</div>
+      <div class="acc-item"><span class="mk">&gt;</span>Google Code Jam to I/O for Women 2022 &mdash; participant.</div>
+      <div class="acc-item"><span class="mk">&gt;</span>Google Kickstart 2022, Round A &mdash; participant.</div>
+      <div class="acc-item"><span class="mk">&gt;</span>Flipkart Grid 5.0 &mdash; qualified for the competition.</div>
+      <div class="acc-item"><span class="mk">&gt;</span>Silver Badge, HackerRank (Python).</div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="links">
+      <a href="https://github.com/chetana2002" target="_blank" rel="noopener">github.com/chetana2002</a>
+      <a href="https://www.linkedin.com/in/chetana-dharavathu/" target="_blank" rel="noopener">linkedin.com/in/chetana-dharavathu</a>
+      <a href="mailto:chetanadharavathu@gmail.com">chetanadharavathu@gmail.com</a>
+    </div>
+    <div class="fine">&copy; <span id="yr"></span> Chetana Dharavathu</div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
